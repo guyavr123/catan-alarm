@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>קטאן - אזעקת משחק</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      text-align: center;
+      background-image: url('catan_background.png.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      font-size: 4em;
+      margin-top: 30px;
+      text-shadow: 3px 3px 6px #000;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>⚠️ קטאן - אזעקת משחק! ⚠️</h1>
+
+  <audio id="alarmSound" autoplay>
+    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.mp3" type="audio/mpeg">
+    הדפדפן שלך לא תומך באודיו.
+  </audio>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const sound = document.getElementById("alarmSound");
+      let count = 0;
+      const maxBeeps = 6;
+
+      function playBeep() {
+        sound.currentTime = 0;
+        sound.play();
+        count++;
+        if (count < maxBeeps) {
+          setTimeout(playBeep, 800);
+        }
+      }
+
+      // נסה לנגן מיידית, ואם חסום - הפעלה בלחיצה
+      sound.play().then(() => {
+        playBeep();
+      }).catch(() => {
+        document.body.addEventListener("click", () => {
+          playBeep();
+        }, { once: true });
+      });
+    });
+  </script>
+</body>
+</html>
